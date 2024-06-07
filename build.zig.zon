@@ -1,0 +1,11 @@
+.{
+    .name = "slash",
+    .version = "0.0.0",
+    .dependencies = .{
+        .@"raylib-zig" = .{
+            .url = "https://github.com/Not-Nik/raylib-zig/archive/devel.tar.gz",
+            .hash = "12204a223b19043e17b79300413d02f60fc8004c0d9629b8d8072831e352a78bf212",
+        },
+    },
+    .paths = .{""},
+}
