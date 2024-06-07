@@ -8,6 +8,7 @@ const Player = struct {
     movement_speed: f32,
     dash_scaler: f32,
     health: f32,
+    kills: usize,
 
     fn init() Player {
         return Player{
@@ -16,6 +17,7 @@ const Player = struct {
             .movement_speed = 500,
             .dash_scaler = 50,
             .health = 100,
+            .kills = 0,
         };
     }
 
@@ -58,6 +60,8 @@ const Player = struct {
             if (enemies.items[i].health <= 0) {
                 _ = enemies.swapRemove(i);
 
+                self.kills += 1;
+
                 self.health += 25;
                 self.health = std.math.clamp(self.health, 0, 100);
             }
@@ -70,6 +74,16 @@ const Player = struct {
 
     fn drawHealth(self: Player) void {
         rl.drawRectangleV(self.position.subtract(.{ .x = 18, .y = 25 }), .{ .x = self.health, .y = 20 }, rl.Color.red);
+    }
+
+    fn drawKills(self: Player, gpa: std.mem.Allocator) !void {
+        var buf = std.ArrayList(u8).init(gpa);
+
+        try buf.writer().print("Kills: {}", .{self.kills});
+
+        const buf_owned_z = @as([:0]u8, @ptrCast(try buf.toOwnedSliceSentinel(0)));
+
+        rl.drawText(buf_owned_z, 10, 10, 20, rl.Color.ray_white);
     }
 };
 
@@ -133,7 +147,7 @@ pub fn main() !void {
     var previous_wave_counter: usize = wave_counter;
 
     while (!rl.windowShouldClose()) {
-        if (rl.getRandomValue(0, 500) < 1 and enemies.items.len < max_enemies) {
+        if (rl.getRandomValue(0, 400) < 1 and enemies.items.len < max_enemies) {
             try enemies.append(Enemy.init());
         }
 
@@ -191,6 +205,8 @@ pub fn main() !void {
                 }
 
                 rl.endMode2D();
+
+                try player.drawKills(allocator);
             }
         }
 
