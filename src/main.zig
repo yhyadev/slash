@@ -68,8 +68,8 @@ const Player = struct {
         rl.drawRectangleV(self.position, .{ .x = self.size, .y = self.size }, rl.Color.ray_white);
     }
 
-    fn drawUI(self: Player, camera: rl.Camera2D) void {
-        rl.drawRectangleV(rl.getWorldToScreen2D(self.position.subtractValue(32), camera), .{ .x = self.health, .y = 15 }, rl.Color.red);
+    fn drawHealth(self: Player) void {
+        rl.drawRectangleV(self.position.subtract(.{ .x = 18, .y = 25 }), .{ .x = self.health, .y = 20 }, rl.Color.red);
     }
 };
 
@@ -92,8 +92,8 @@ const Enemy = struct {
     }
 
     fn update(self: *Enemy, player: *Player, dt: f32) void {
-        if (self.position.distance(player.position) < 150) {
-            player.health -= 0.1;
+        if (self.position.distance(player.position) < 100) {
+            player.health -= 0.08;
         }
 
         self.position = self.position.lerp(player.position, dt);
@@ -103,8 +103,8 @@ const Enemy = struct {
         rl.drawRectangleV(self.position, .{ .x = self.size, .y = self.size }, rl.Color.red);
     }
 
-    fn drawUI(self: Enemy, camera: rl.Camera2D) void {
-        rl.drawRectangleV(rl.getWorldToScreen2D(self.position.subtractValue(32), camera), .{ .x = self.health, .y = 15 }, rl.Color.red);
+    fn drawHealth(self: Enemy) void {
+        rl.drawRectangleV(self.position.subtract(.{ .x = 18, .y = 25 }), .{ .x = self.health, .y = 20 }, rl.Color.red);
     }
 };
 
@@ -181,20 +181,16 @@ pub fn main() !void {
                 {
                     try player.update(&enemies, dt);
                     player.drawShape();
+                    player.drawHealth();
 
                     for (0..enemies.items.len) |i| {
                         enemies.items[i].update(&player, dt);
                         enemies.items[i].drawShape();
+                        enemies.items[i].drawHealth();
                     }
                 }
 
                 rl.endMode2D();
-
-                player.drawUI(camera);
-
-                for (0..enemies.items.len) |i| {
-                    enemies.items[i].drawUI(camera);
-                }
             }
         }
 
