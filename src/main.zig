@@ -124,7 +124,9 @@ const Enemy = struct {
 
 pub fn main() !void {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+
     var arena = std.heap.ArenaAllocator.init(gpa.allocator());
+    defer arena.deinit();
 
     const allocator = arena.allocator();
 
