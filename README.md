@@ -1,6 +1,6 @@
-# Slash - FUnny Little Game
+# Slash
 
-A funny little game I made in 5 hours
+A funny little game 
 
 ## Quick Start
 
@@ -14,6 +14,6 @@ zig build run
 
 ## Controls
 
-1 - WASD - Movement
-2 - Mouse Left Button - Attack (nearest enemy gets damage)
-3 - Mouse Right Button - Dash
+- WASD - Movement
+- Mouse Left Button - Attack (nearest enemy gets damage)
+- Mouse Right Button - Dash
