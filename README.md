@@ -14,6 +14,6 @@ zig build run
 
 ## Controls
 
-WASD - Movement
-Mouse Left Button - Attack (nearest enemy gets damage)
-Mouse Right Button - Dash
+1 - WASD - Movement
+2 - Mouse Left Button - Attack (nearest enemy gets damage)
+3 - Mouse Right Button - Dash
