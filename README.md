@@ -11,3 +11,9 @@ git clone https://github.com/yhyadev/slash
 cd slash
 zig build run
 ```
+
+## Controls
+
+WASD - Movement
+Mouse Left Button - Attack (nearest enemy gets damage)
+Mouse Right Button - Dash
